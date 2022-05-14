@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+În cadrul acestui proiect am realizat o aplicație care are ca scop returnarea sumei reieșite în urma unui schimb valutar, pe baza unei sume de bani introdusă, moneda în care este suma respectivă și moneda în care vrei sa schimbi suma. În final rezultatul acestui proces de Exchange Rate este trimis pe mail către un destinatar pe care îl putem alege.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Pentru a avea informațiile legate de ratele de schimb valutar am folosit API-ul site-ului Apilayer (https://apilayer.com/marketplace/description/exchangerates_data-api#authentication). Logica din spate este că atunci când completăm cu Suma de bani, moneda acelei sume și moneda în care vrem să schimbăm banii respectivi se va returna un JSON cu calculul noii sume de bani. API Key-ul site-ului utilizat este salvat în fișierul .env și este utilizat atunci când facem un request ca url.
 
-## Available Scripts
+Pentru partea de trimitere a mail-urilor am utilizat API-ul de la SendGrid (https://sendgrid.com/). Contul care trimite mail-urile este adresa de student de email și ca parametrii de request mai avem: numele expeditorului, adresa de email și mesajul care reprezintă rezultatul schimbului valutar.
 
-In the project directory, you can run:
+În screenshot-ul de mai jos putem vedea baza de date utilizata pentru stocarea mail-urilor trimise:
+ ![image](https://user-images.githubusercontent.com/105487372/168451188-a83f2b6c-d4d7-4e29-b4b0-98c2f17e9c23.png)
 
-### `npm start`
+Metodele HTTP folosite
+Get all Messages – Ne returnează mail-urile salvate în baza de date
+ ![image](https://user-images.githubusercontent.com/105487372/168451190-fce54231-1cb3-4790-8e58-9ca267434e51.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Get Message by ID – Returnează detaliile mail-ului pentru un ID ales
+ ![image](https://user-images.githubusercontent.com/105487372/168451200-736a9330-348f-41bb-ac2c-eab3f78d8f76.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Get exchange rate – Calculeaza Exchange Rate-ul și-l returnează
+ ![image](https://user-images.githubusercontent.com/105487372/168451207-95b42ce5-b702-41b2-bbe0-92157c276f8e.png)
 
-### `npm test`
+Delete by ID - Stergerea unei înregistrări din baza de date
+ ![image](https://user-images.githubusercontent.com/105487372/168451212-53a50b8d-1d85-4eac-9be4-17ad3046f0b4.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Aplicația arată precum în screenshot-ul de mai jos. Userii vor avea de introdus:
+-moneda sumei pe care vor să o schimbe în câmpul Base Currency
+-moneda în care vor să schimbe suma în câmpul Exchange Currency
+-suma pe care vor să o schimbe în câmpul Amount 
+ ![image](https://user-images.githubusercontent.com/105487372/168451222-ebfaba2a-625a-486b-9ae9-f4dd6043d6dd.png)
 
-### `npm run build`
+După ce userii completează câmpurile menționate mai sus vor apăsa pe butonul Calculate care va returna suma dorită.
+ ![image](https://user-images.githubusercontent.com/105487372/168451225-462720d3-bca8-445d-a37f-acfb4150e4f0.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Pentru trimiterea acestei informații pe mail, tot ce avem de făcut este să completăm câmpurile Your Name și Receiver Mail și să apăsăm pe butonul Send Mail.
+ ![image](https://user-images.githubusercontent.com/105487372/168451234-00a792bf-4da3-4a38-91a5-f652d1216000.png)
+![image](https://user-images.githubusercontent.com/105487372/168451239-056a7129-4eba-4024-a574-054c9ee98af0.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+ 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Bibliografie: Seminar Cloud Computing, https://apilayer.com/marketplace/description/exchangerates_data-api#authentication
+Link youtube:  
+Link heroku back: https://frozen-beach-52315.herokuapp.com/ link heroku front: https://gentle-scrubland-90823.herokuapp.com/
